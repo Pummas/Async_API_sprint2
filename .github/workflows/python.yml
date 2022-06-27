@@ -18,7 +18,7 @@ jobs:
       run: flake8 .
 
   rename_repo:
-    name: Линтер
+    name: Форматирование имени Репозитория
     runs-on: ubuntu-latest
     steps:
     - name: Read Docker Image Identifiers
