@@ -2,32 +2,28 @@ import abc
 from typing import Any
 
 
-class BaseStorage:
+class SaveStateStorage:
     @abc.abstractmethod
     def save_state(self, state: dict) -> None:
         """Сохранить состояние в постоянное хранилище"""
         pass
 
+
+class RetrieveStateStorage:
     @abc.abstractmethod
     def retrieve_state(self, name) -> dict:
         """Загрузить состояние локально из постоянного хранилища"""
         pass
 
 
-# class JsonFileStorage(BaseStorage):
-#     def __init__(self, file_path: Optional[str] = None):
-#         self.file_path = file_path
-#
-#     def save_state(self, state: dict) -> None:
-#         with open(self.file_path, "w") as file:
-#             json.dump(state, file)
-#
-#     def retrieve_state(self) -> dict:
-#         with open(self.file_path, "r") as file:
-#             try:
-#                 return json.load(file)
-#             except Exception:
-#                 return {}
+class BaseStorage(SaveStateStorage, RetrieveStateStorage):
+    def save_state(self, state: dict) -> None:
+        """Сохранить состояние в постоянное хранилище"""
+        pass
+
+    def retrieve_state(self, name) -> dict:
+        """Загрузить состояние локально из постоянного хранилища"""
+        pass
 
 
 class RedisStorage(BaseStorage):
@@ -53,7 +49,6 @@ class State:
 
     def __init__(self, storage: BaseStorage):
         self.storage = storage
-        # self.storage.retrieve_state()
 
     def set_state(self, key: str, value: Any) -> None:
         """Установить состояние для определённого ключа"""

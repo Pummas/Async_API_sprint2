@@ -1,6 +1,7 @@
 import os
 from logging import getLogger
 from typing import List, Tuple
+from abc import abstractmethod
 
 import psycopg2
 from dotenv import load_dotenv
@@ -8,7 +9,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-class PostgresLoader:
+class LoadData:
+    @abstractmethod
+    def load_data(self, data: list) -> Tuple[list, str]:
+        pass
+
+
+class Load:
+    @abstractmethod
+    def load(self, state: str) -> list:
+        pass
+
+
+class PostgresLoader(LoadData, Load):
     """
     Класс, реализующий запросы к PostgreSQL
     """
