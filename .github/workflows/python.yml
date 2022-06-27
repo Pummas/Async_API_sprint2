@@ -17,6 +17,13 @@ jobs:
     - name: Flake8
       run: flake8 .
 
+  rename_repo:
+    name: Линтер
+    runs-on: ubuntu-latest
+    steps:
+    - name: Read Docker Image Identifiers
+      run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+
   build-and-push-image:
     needs: linter
     runs-on: ubuntu-latest
@@ -30,5 +37,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: ${{ github.repository }}/async_api
+          repository: ${{ env.IMAGE_REPOSITORY }}/async_api
           tag_with_ref: true
