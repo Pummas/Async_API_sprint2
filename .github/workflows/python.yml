@@ -17,12 +17,16 @@ jobs:
     - name: Flake8
       run: flake8 .
 
-  rename_repo:
-    name: Форматирование имени Репозитория
-    runs-on: ubuntu-latest
-    steps:
-    - name: Read Docker Image Identifiers
-      run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+  - name: PrepareReg Names
+      run: |
+        echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+        echo IMAGE_TAG=$(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]' | awk '{split($0,a,"/"); print a[3]}') >> $GITHUB_ENV
+#  rename_repo:
+#    name: Форматирование имени Репозитория
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Read Docker Image Identifiers
+#      run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
 
   build-and-push-image:
     needs: linter
