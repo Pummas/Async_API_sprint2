@@ -41,5 +41,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: ${{ env.IMAGE_REPOSITORY }}/async_api
+          repository: ${{ github.repository }}/async_api
           tag_with_ref: true
