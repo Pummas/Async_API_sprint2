@@ -26,7 +26,7 @@ class FilmDetail(FilmMain):
     genre: Optional[List[str]]
     actors: Optional[List[dict]]
     writers: Optional[List[dict]]
-    director: Optional[str]
+    director: Optional[List[str]]
 
 
 @router.get('/')

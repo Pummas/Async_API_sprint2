@@ -133,7 +133,7 @@ class PostgresPerson(PostgresTransformData):
         try:
             self._cursor.execute(
                 f"""
-                SELECT DISTINCT person.id, full_name as person,
+                SELECT DISTINCT person.id, full_name as full_name,
                 to_char(modified, 'YYYY-MM-DD HH24:MI:SS.US')
                     as modified
                 FROM content.person

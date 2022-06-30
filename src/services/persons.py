@@ -5,7 +5,7 @@ from db.elastic import get_elastic
 from db.redis import get_redis
 from elasticsearch import AsyncElasticsearch
 from fastapi.param_functions import Depends
-from models.person import PersonBase
+from models.person import OnlyPerson
 
 from .base import Service
 
@@ -19,8 +19,8 @@ class PersonService(Service):
         return 'persons'
 
     @property
-    def model(self) -> Type[PersonBase]:
-        return PersonBase
+    def model(self) -> Type[OnlyPerson]:
+        return OnlyPerson
 
 
 def get_person_service(

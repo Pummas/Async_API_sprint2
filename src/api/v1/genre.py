@@ -17,7 +17,6 @@ router = APIRouter()
 class Genre(BaseModel):
     uuid: UUID
     name: str
-    description: Union[str, None]
 
 
 @router.get('/')
@@ -36,8 +35,7 @@ async def genre_main(
     if not genres:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
     return [Genre(
-        uuid=x.id, name=x.name, description=x.description
-    ) for x in genres]
+        uuid=x.id, name=x.name) for x in genres]
 
 
 @router.post('/search/')

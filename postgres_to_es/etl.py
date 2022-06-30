@@ -70,7 +70,7 @@ class ETLProcess(ETLExtract, ETLTransform, ETLLoad):
         self.states = state
         self.state = ''
 
-    @backoff(logger=getLogger())
+    # @backoff(logger=getLogger())
     def extract(self, pg_table: PostgresLoader, state_name: str) -> tuple:
         """Взять состояние и учитывая состояние
         получить данные из PostgreSQL"""
@@ -84,7 +84,7 @@ class ETLProcess(ETLExtract, ETLTransform, ETLLoad):
         except Exception as e:
             raise e
 
-    @backoff(logger=getLogger())
+    # @backoff(logger=getLogger())
     def loader(self, data: list, url: str,
                port: int, state: str, index_name: str):
         """Загрузить данные в Elasticsearch и обновить состояние"""

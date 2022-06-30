@@ -38,6 +38,7 @@ class Service(ABC):
         if param := kwargs.get('sort'):
             order_value = 'asc' if param.startswith('-') else 'desc'
             param = param[1:]
+            print(param)
             q['sort'] = [{param: {'order': order_value}}]
 
         response_list = []
