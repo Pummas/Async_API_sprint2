@@ -15,4 +15,3 @@ class FilmBase(BaseOrjsonModel):
     actors: List[PersonBase]
     writers: Optional[List[PersonBase]] = Field(default_factory=list)
     directors: Optional[List[PersonBase]] = Field(default_factory=list)
-

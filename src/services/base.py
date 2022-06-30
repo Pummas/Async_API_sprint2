@@ -59,4 +59,3 @@ class Service(ABC):
         except NotFoundError:
             return None
         return self.model(**response['_source'])
-

@@ -1,3 +1,4 @@
+import abc
 import json
 import time
 from functools import wraps
@@ -38,7 +39,29 @@ def backoff(logger, start_sleep_time=0.1, factor=2, border_sleep_time=10):
     return func_wrapper
 
 
-class ETLProcess:
+class ETLExtract:
+    @abc.abstractmethod
+    def extract(self, pg_table: PostgresLoader, state_name: str) -> tuple:
+        pass
+
+
+class ETLTransform:
+    def transform(self, data: dict, index_name: str) -> str:
+        """Преобразовать данные в нужный формат"""
+        request = json.dumps(
+            {"index": {"_index": index_name, "_id": data["id"]}}
+        )
+        return f"{request}\n {json.dumps(data)} \n"
+
+
+class ETLLoad:
+    @abc.abstractmethod
+    def loader(self, data: list, url: str,
+               port: int, state: str, index_name: str):
+        pass
+
+
+class ETLProcess(ETLExtract, ETLTransform, ETLLoad):
     """
     Класс для переноса данных из PostgreSQL в Elasticsearch
     """
@@ -60,13 +83,6 @@ class ETLProcess:
             return data_to_transform, state
         except Exception as e:
             raise e
-
-    def transform(self, data: dict, index_name: str) -> str:
-        """Преобразовать данные в нужный формат"""
-        request = json.dumps(
-            {"index": {"_index": index_name, "_id": data["id"]}}
-        )
-        return f"{request}\n {json.dumps(data)} \n"
 
     @backoff(logger=getLogger())
     def loader(self, data: list, url: str,

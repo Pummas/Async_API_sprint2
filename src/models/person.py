@@ -4,5 +4,5 @@ from models.base import BaseOrjsonModel
 
 
 class PersonBase(BaseModel, BaseOrjsonModel.Config):
-    id: UUID 
+    id: UUID
     name: str
