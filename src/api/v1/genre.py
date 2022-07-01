@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import List, Optional, Union
+from typing import List, Optional
 from uuid import UUID
 
 from fastapi.routing import APIRouter

@@ -2,7 +2,6 @@ from typing import Optional, List
 from pydantic import Field
 from uuid import UUID
 from models.base import BaseOrjsonModel
-from models.genre import GenreBase
 from models.person import PersonFilmwork
 
 
