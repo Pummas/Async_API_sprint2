@@ -36,9 +36,10 @@ class Service(ABC):
         q = {"query": {"match_all": {}}}
 
         if param := kwargs.get('sort'):
-            order_value = 'asc' if param.startswith('-') else 'desc'
-            param = param[1:]
-            print(param)
+            order_value = 'asc'
+            if param.startswith('-'):
+                param = param[1:]
+                order_value = 'desc'
             q['sort'] = [{param: {'order': order_value}}]
 
         response_list = []
