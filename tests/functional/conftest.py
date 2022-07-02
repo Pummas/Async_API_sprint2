@@ -1,13 +1,13 @@
 import asyncio
 import pytest
-import aioredis
+# import aioredis
 import aiohttp
 import redis
 
 from dataclasses import dataclass
 from multidict import CIMultiDictProxy
 
-from src.core.config import REDIS_HOST, REDIS_PORT
+# from src.core.config import REDIS_HOST, REDIS_PORT
 
 from .settings import TestSettings
 
@@ -52,4 +52,6 @@ async def session():
 
 @pytest.fixture(scope="session")
 def redis_client():
-    return redis.Redis(settings.redis_host, settings.redis_port)  # type: ignore
+    return redis.Redis(
+        settings.redis_host, settings.redis_port
+    )  # type: ignore

@@ -18,4 +18,3 @@ def wait_for_es():
         ping = es.ping()
         sleep(1)
     return ping
-
