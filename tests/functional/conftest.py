@@ -1,6 +1,5 @@
 import asyncio
 import pytest
-# import aioredis
 import aiohttp
 import redis
 
@@ -63,6 +62,6 @@ def redis_client():
 
 @pytest.fixture(scope='session')
 async def es_client():
-    client = AsyncElasticsearch(hosts=f'127.0.0.1:9200')
+    client = AsyncElasticsearch(hosts=f'{settings.es_host}:{settings.es_port}')
     yield client
     await client.close()

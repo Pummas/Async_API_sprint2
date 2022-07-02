@@ -1,15 +1,12 @@
-import hashlib
-import json
 import uuid
-import fastapi_cache
 import pytest
-from tests.functional.conftest import settings, es_client
+from tests.functional.conftest import settings
 from tests.functional.testdata import es_indexes, genres_bulk
 
 
 @pytest.fixture(scope="session")
 async def setup_function(es_client):
-    es_index = es_indexes.GenresIndex(settings.es_host, settings.es_port)
+    es_index = es_indexes.GenresIndex(settings.es_url, settings.es_port)
     await es_index.create_index('genres')
     await es_client.bulk(genres_bulk.data, 'genres', refresh=True)
     yield None
@@ -25,7 +22,8 @@ async def test_get_all_genres(setup_function, make_get_request):
 
 @pytest.mark.asyncio
 async def test_genre(setup_function, make_get_request):
-    response = await make_get_request('/genres/f24fd632-b1a5-4273-a835-0119bd12f829/', {})
+    response = await make_get_request(
+        '/genres/f24fd632-b1a5-4273-a835-0119bd12f829/')
     assert response.status == 200
     assert response.body.get('uuid') == 'f24fd632-b1a5-4273-a835-0119bd12f829'
     assert response.body.get('name') == 'News'
