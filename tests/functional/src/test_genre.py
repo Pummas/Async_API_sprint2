@@ -1,7 +1,7 @@
 import uuid
 import pytest
-from tests.functional.conftest import settings
-from tests.functional.testdata import es_indexes, genres_bulk
+from functional.conftest import settings
+from functional.testdata import es_indexes, genres_bulk
 
 
 @pytest.fixture(scope="session")

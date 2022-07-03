@@ -66,10 +66,10 @@ if __name__ == '__main__':
     }
     states = State(storage=file_storage)
     create_indexes(elastic_url, elastic_port)
-    if states.get_state('movies') is None:
-        states.set_state('movies', '1000-04-10')
-        states.set_state('persons', '1000-04-10')
-        states.set_state('genres', '1000-04-10')
+    # if states.get_state('movies') is None:
+    states.set_state('movies', '1000-04-10')
+    states.set_state('persons', '1000-04-10')
+    states.set_state('genres', '1000-04-10')
     while True:
         with psycopg2.connect(
                 **dsl, cursor_factory=psycopg2.extras.RealDictCursor

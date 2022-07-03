@@ -1,15 +1,14 @@
 from http import HTTPStatus
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Tuple
 from uuid import UUID
 
 from fastapi.routing import APIRouter
 from pydantic import BaseModel
-from fastapi.param_functions import Depends
+from fastapi.param_functions import Depends, Query
 from fastapi.exceptions import HTTPException
 from fastapi_cache.decorator import cache
 
 from services.persons import PersonService, get_person_service
-from .base import Request
 
 router = APIRouter()
 
@@ -38,24 +37,18 @@ async def person_main(
     ) for x in persons_all_fields]  # type: ignore
 
 
-@router.post('/search/')
+@router.get('/search/')
 @cache(expire=60)
 async def person_search(
-        search: Request,
+        query: str,
+        page_size: int = Query(50, alias="page[size]"),
+        page_number: int = Query(1, alias="page[number]"),
         person_service: PersonService = Depends(
-            get_person_service)) -> List[Person]:
-    """
-    Person search
-    - **id**: person id
-    - **full_name**: person full name
+            get_person_service)) -> Tuple[Person, Optional[List[dict]]]:
 
-    """
-    persons_all_fields_search = await person_service.search(
-        body=search.dict(by_alias=True)
-    )
-    return [Person(
-        uuid=x.id, full_name=x.full_name
-    ) for x in persons_all_fields_search]  # type: ignore
+    person = await person_service.person_search(query, page_size, page_number)
+
+    return person  # type: ignore
 
 
 @router.get('/{person_id}', response_model=Person)
