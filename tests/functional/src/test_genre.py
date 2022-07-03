@@ -1,7 +1,7 @@
 import uuid
 import pytest
-from functional.conftest import settings
-from functional.testdata import es_indexes, genres_bulk
+from ..conftest import settings
+from ..testdata import es_indexes, genres_bulk
 
 
 @pytest.fixture(scope="session")
@@ -30,7 +30,8 @@ async def test_genre(setup_function, make_get_request):
 
 
 @pytest.mark.asyncio
-async def test_cache_genre(es_client, make_get_request, redis_client):
+async def test_cache_genre(setup_function, es_client,
+                           make_get_request, redis_client):
     uuid_key = uuid.uuid4()
     data = {"id": uuid_key, "name": "Test"}
     await es_client.create('genres', uuid_key, data)

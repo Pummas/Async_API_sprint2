@@ -1,7 +1,7 @@
 import uuid
 import pytest
-from tests.functional.conftest import settings
-from tests.functional.testdata import es_indexes, persons_bulk
+from ..conftest import settings
+from ..testdata import es_indexes, persons_bulk
 
 
 @pytest.fixture(scope="session")
@@ -39,7 +39,8 @@ async def test_search_person(setup_function, make_get_request):
 
 
 @pytest.mark.asyncio
-async def test_cache_person(es_client, make_get_request, redis_client):
+async def test_cache_person(setup_function, es_client,
+                            make_get_request, redis_client):
     uuid_key = uuid.uuid4()
     data = {"id": uuid_key, "full_name": "Test Testovich"}
     await es_client.create('persons', uuid_key, data)

@@ -8,10 +8,6 @@ from dataclasses import dataclass
 from elasticsearch import AsyncElasticsearch
 from multidict import CIMultiDictProxy
 
-# from src.core.config import REDIS_HOST, REDIS_PORT
-
-# from tests.functional.settings import TestSettings
-
 from .settings import TestSettings
 
 settings = TestSettings()
