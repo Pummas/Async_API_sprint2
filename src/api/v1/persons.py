@@ -1,5 +1,7 @@
 from http import HTTPStatus
-from typing import List, Optional, Union, Tuple
+
+from typing import List, Optional, Tuple
+
 from uuid import UUID
 
 from fastapi.routing import APIRouter
@@ -10,13 +12,13 @@ from fastapi_cache.decorator import cache
 
 from services.persons import PersonService, get_person_service
 
+
 router = APIRouter()
 
 
 class Person(BaseModel):
     uuid: UUID
     full_name: str
-    description: Union[str, None]
 
 
 @router.get('/')
@@ -27,8 +29,8 @@ async def person_main(
 ) -> List[Person]:
     """
     Main information of the person
-    - **id**: person id
-    - **full_name**: person full name
+    - id: person id
+    - full_name: person full name
 
     """
     persons_all_fields = await person_service.get_all(sort=sort)

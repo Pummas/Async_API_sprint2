@@ -9,7 +9,7 @@ from fastapi.exceptions import HTTPException
 from fastapi_cache.decorator import cache
 
 from services.genre import GenreService, get_genre_service
-from .base import Request
+
 
 router = APIRouter()
 
@@ -36,24 +36,6 @@ async def genre_main(
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
     return [Genre(
         uuid=x.id, name=x.name) for x in genres]
-
-
-@router.post('/search/')
-@cache(expire=60)
-async def genre_search(
-        search: Request,
-        genre_service: GenreService = Depends(get_genre_service)
-) -> List[Genre]:
-    """
-    Genre search
-    - **id**: genre id
-    - **name**: genre name
-
-    """
-    genres = await genre_service.search(body=search.dict(by_alias=True))
-    if not genres:
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
-    return [Genre(uuid=x.id, name=x.name) for x in genres]  # type: ignore
 
 
 @router.get('/{genre_id}', response_model=Genre)

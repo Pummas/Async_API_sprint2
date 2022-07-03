@@ -25,11 +25,9 @@ class Service(ABC):
         self.redis = redis
         self.elastic = elastic
 
-    async def search(self, body):
+    async def search(self, **kwargs):
         resp = await self.elastic.search(
-            index=self.index,
-            body=body
-        )
+            index=self.index)
         return [self.model(**doc['_source']) for doc in resp['hits']['hits']]
 
     async def get_all(self, **kwargs):

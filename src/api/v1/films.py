@@ -4,12 +4,12 @@ from uuid import UUID
 
 from fastapi.routing import APIRouter
 from pydantic import BaseModel
-from fastapi.param_functions import Depends
+from fastapi.param_functions import Depends, Query
 from fastapi.exceptions import HTTPException
 from fastapi_cache.decorator import cache
 
 from services.films import FilmService, get_film_service
-from .base import Request
+
 
 router = APIRouter()
 
@@ -49,26 +49,21 @@ async def film_main(
     ) for x in films_all_fields]
 
 
-@router.post('/search/')
-@cache(expire=60)
+@router.get('/search')
 async def film_search(
-        search: Request,
-        film_service: FilmService = Depends(
-            get_film_service)) -> List[FilmMain]:
-    """
-    Film search
-    - **id**: film id
-    - **title**: film title
-    - **imdb_rating**: imdb rating of film
-
-    """
-    films_all_fields_search = await film_service.search(
-        body=search.dict(by_alias=True)
-    )
-    return [FilmMain(uuid=x.id,
-                     title=x.title,
-                     imdb_rating=x.imdb_rating
-                     ) for x in films_all_fields_search]  # type: ignore
+        query: str,
+        page_size: int = Query(25, alias="page[size]"),
+        page_number: int = Query(1, alias="page[number]"),
+        film_service:
+        FilmService = Depends(get_film_service)) -> List[FilmMain]:
+    films_all_fields_search = await film_service.get_film_search(query,
+                                                                 page_size,
+                                                                 page_number)
+    films = [FilmMain(
+        uuid=x.id, title=x.title,
+        imdb_rating=x.imdb_rating
+        ) for x in films_all_fields_search]
+    return films
 
 
 @router.get('/{film_id}', response_model=FilmDetail)
