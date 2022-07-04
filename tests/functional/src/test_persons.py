@@ -1,5 +1,7 @@
 import uuid
+
 import pytest
+
 from ..conftest import settings
 from ..testdata import es_indexes, persons_bulk
 

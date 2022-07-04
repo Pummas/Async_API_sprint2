@@ -1,14 +1,14 @@
 import asyncio
-import pytest
-import aiohttp
-import redis
-
 from dataclasses import dataclass
 
+import aiohttp
+import pytest
+import redis
 from elasticsearch import AsyncElasticsearch
 from multidict import CIMultiDictProxy
 
 from .settings import TestSettings
+
 
 settings = TestSettings()
 
