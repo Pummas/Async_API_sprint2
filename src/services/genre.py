@@ -1,13 +1,18 @@
 from typing import Type
 
 from aioredis import Redis
-from db.elastic import get_elastic
-from db.redis import get_redis
 from elasticsearch import AsyncElasticsearch
 from fastapi.param_functions import Depends
 from models.genre import GenreBase
 
+from db.redis import RedisStorage
+from db.elastic import ElasticSearch
+
 from .base import Service
+
+
+cache = RedisStorage()
+elastic = ElasticSearch()
 
 
 class GenreService(Service):
@@ -24,7 +29,7 @@ class GenreService(Service):
 
 
 def get_genre_service(
-        redis: Redis = Depends(get_redis),
-        elastic: AsyncElasticsearch = Depends(get_elastic),
+        redis: RedisStorage = Depends(cache.get),
+        elastic: ElasticSearch = Depends(elastic.get),
 ) -> GenreService:
-    return GenreService(redis, elastic)
+    return GenreService(redis, elastic)  # type: ignore

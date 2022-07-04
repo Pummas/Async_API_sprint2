@@ -7,10 +7,10 @@ from ..testdata import es_indexes, films_bulk
 @pytest.fixture(scope="session")
 async def setup_function(es_client):
     es_index = es_indexes.MovieIndex(settings.es_url, settings.es_port)
-    await es_index.create_index('films')
-    await es_client.bulk(films_bulk.data, 'films', refresh=True)
+    await es_index.create_index('movies')
+    await es_client.bulk(films_bulk.data, 'movies', refresh=True)
     yield None
-    await es_index.delete_index('films')
+    await es_index.delete_index('movies')
 
 
 @pytest.mark.asyncio
