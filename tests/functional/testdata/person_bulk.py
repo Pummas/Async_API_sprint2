@@ -1,0 +1,15 @@
+data = [[{"index": {"_index": "persons", "_id": "264e7c46-e658-4725-8cc3-21c02c9a0721"}},
+         {"id": "264e7c46-e658-4725-8cc3-21c02c9a0721", "full_name": "Kenneth Biller"}],
+        [{"index": {"_index": "persons", "_id": "fc24f8c1-6bf0-468e-a3a8-2750e5f7abe5"}},
+         {"id": "fc24f8c1-6bf0-468e-a3a8-2750e5f7abe5", "full_name": "Gary Goddard"}],
+        [{"index": {"_index": "persons", "_id": "9adf0539-241e-4b7b-8144-dd345da6b2e0"}},
+         {"id": "9adf0539-241e-4b7b-8144-dd345da6b2e0", "full_name": "George Marshall"}],
+        [{"index": {"_index": "persons", "_id": "8fb635c2-913f-4e70-bfec-404a5c7f7646"}},
+         {"id": "8fb635c2-913f-4e70-bfec-404a5c7f7646", "full_name": "A. Edward Sutherland"}],
+        [{"index": {"_index": "persons", "_id": "a36584c2-617c-400d-94c9-e4740c1aa925"}},
+         {"id": "a36584c2-617c-400d-94c9-e4740c1aa925", "full_name": "Harry Tugend"}],
+        [{"index": {"_index": "persons", "_id": "06fed4f1-d5e4-4b31-92d9-9e8072b02af3"}},
+         {"id": "06fed4f1-d5e4-4b31-92d9-9e8072b02af3", "full_name": "George S. Kaufman"}],
+        [{"index": {"_index": "persons", "_id": "c6c9231f-45ce-4751-8775-858b7b00f8ca"}},
+         {"id": "c6c9231f-45ce-4751-8775-858b7b00f8ca", "full_name": "Arthur A. Ross"}]
+        ]
