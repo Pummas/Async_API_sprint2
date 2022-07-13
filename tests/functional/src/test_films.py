@@ -22,7 +22,6 @@ async def setup_function(es_client):
     await es_index.delete_index('movies')
 
 
-
 async def test_get_all_films(setup_function, make_get_request):
     response = await make_get_request('/films')
     assert response.status == HTTPStatus.OK
